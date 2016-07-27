@@ -3,7 +3,8 @@
  * Template metaprogramming
  *
  * binary 2 decimal converter
- * This is moder metaprogramming code, inheritates from C++14 libraries and techniques
+ * This is moder metaprogramming code, inheritates from C++14 libraries and
+ * techniques
  * The code it is meant to parse any long 1,0's as binaries to decimal
  *
  */

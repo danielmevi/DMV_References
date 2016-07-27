@@ -6,6 +6,10 @@ alias cl clear
 alias h history
 alias grep grep -nP
 alias calias cat $HOME/.aliases
+alias v vim
+
+# ZSE queue chedk
+alias zsejobs nbqstat -P fm_zse user=dmedin2
 
 # CC
 alias cc gcc
@@ -17,7 +21,9 @@ alias cdDNV cd /nfs/site/disks/dnv.emu.002/dmedin2
 # Latest simics packages
 #setenv Simics /nfs/site/disks/dnv.emu.001/simics/simics-4.8.pre103/simics-4.8.81
 #setenv Simics /nfs/site/disks/dnv.emu.001/simics/simics-4.8.pre123/simics-4.8.96
-setenv Simics /nfs/site/disks/dnv.emu.001/simics/simics-4.8.pre135/simics-4.8.110
+#setenv Simics /nfs/site/disks/dnv.emu.001/simics/simics-4.8.pre135/simics-4.8.110
+setenv Simics /nfs/site/eda/group/SYSNAME/simics/windriver/simics/
+alias cdSimics /nfs/site/eda/group/SYSNAME/simics/windriver/simics/
 
 #CDF disk
 alias cdCDF cd /nfs/site/disks/cdf.emu.002/dmedin2
@@ -42,3 +48,4 @@ alias eclipse "/nfs/site/eda/group/SYSNAME/simics/windriver/simics/4.8.87/bin/si
 
 # IDI
 alias IDIclone "git clone ssh://dmedin2@git-amr-2.devtools.intel.com:29418/pve_spark_modules-idi_xtor"
+

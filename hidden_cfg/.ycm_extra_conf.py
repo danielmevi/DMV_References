@@ -33,7 +33,7 @@ flags = [
 # a "-std=<something>".
 # For a C project, you would set this to something like 'c99' instead of
 # 'c++11'.
-'-std=c++1y',
+'-std=c++03',
 # ...and the same thing goes for the magic -x option which specifies the
 # language that the files to be compiled are written in. This is mostly
 # relevant for c++ headers.
@@ -48,11 +48,25 @@ flags = [
 '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1',
 '-isystem',
 '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include',
-'-L../include/',
-'-L../src/',
-'-L../simics/IDIBaseDevice',
-'-L../simics/IDICoreDevice',
-'-L../simics/IDIUncoreDevice',
+# IDI repo structure
+# Note: It is mean to hit the headers for specific paths. Will not harm if paths are wrong for other paths
+'-I../include/',
+'-I../src/',
+'-I../simics/IDIBaseDevice',
+'-I../simics/IDICoreDevice',
+'-I../simics/IDIUncoreDevice',
+# SV relative paths
+# Paths will be relative and not full correct since will be hardcoded instead of using the one for the current flow
+'-I/nfs/site/disks/fm_vt_0073/work/dmedin2/home/null_engine/svdpi.h',
+# Simics 4.8.117 paths
+'-I/nfs/site/eda/group/SYSNAME/simics/windriver/simics/4.8.117/src/include',
+'-I/nfs/site/eda/group/SYSNAME/simics/windriver/simics-extension-builder/4.8.22/src/include',
+'-I/nfs/site/eda/group/SYSNAME/simics/windriver/simics-model-builder/4.8.73/src/include',
+# idi BFM paths
+'-I/nfs/fm/disks/fm_vt_0021/vt_tools_sim/collateral/idi_bfm/UNCORE_5_22_0/idi2/bfm/include',
+'-I/nfs/fm/disks/fm_vt_0021/vt_tools_sim/collateral/idi_bfm/UNCORE_5_22_0/base/include',
+# SystemC paths
+'-I/nfs/fm/disks/fm_vt_0021/vt_tools_sim/collateral/systemc/2.2.1-threaded/gcc_4.3.2/x86-64_linux26/opt/include'
 ]
 
 

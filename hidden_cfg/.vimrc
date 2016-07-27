@@ -40,6 +40,7 @@ let g:ycm_confirm_extra_conf = 0
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+highlight Pmenu ctermbg=White
 set history=100        " How many lines of history to remember
 set ffs=unix,dos,mac   " support all three, in this order
 filetype plugin indent on " load filetype plugins
@@ -50,6 +51,43 @@ set completeopt=longest,menu " for omnipotent
 behave mswin           " control mouse behavior
 
 set diffexpr=
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Moves
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Moves to begin and end of line
+nnoremap 8 ^
+nnoremap 9 $
+" Moves page up and page down
+nnoremap - <C-B>
+nnoremap = <C-F>
+" Moves backward and forward in edited locations
+nnoremap < :g;<CR>
+nnoremap > :g,<CR>
+
+" Map movements of C-E to other key combination
+
+" Marks
+" m<mark_name>    -> creates mark under cursor
+" '<mark_name>    -> return to mark name 
+" :'<mark1>, '<mark2> <command>
+"       i.e: :'x, 'y d           -> delete lines from mark x to mark y
+"       i.e: :45, 75 w foo.cpp   -> cut lines from 45 to 75 and write them to foo.cpp file
+
+" Las edit line
+" '.              -> jump to line where last edit was made
+
+" Open header or source file
+nnoremap <F11> :e %<.h<CR>
+nnoremap <F12> :e %<.cc<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Clang
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Formating
+map <C-E> :pyf ~/clang-format.py<cr>
+imap <C-E> <ESC>:pyf ~/clang-format.py<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Syntatics
@@ -69,6 +107,19 @@ set diffexpr=
 
 "let g:syntastic_cpp_cpp_exec = "/usr/intel/pkgs/gcc/5.2.0/bin/g++"
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Spellcheck
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+:map <F7> :setlocal spell! spelllang=en_us<CR>
+
+"Commands"
+" Find next      -> ]s
+" Find previous  -> [s
+" Suggestions    -> z= 
+" <F6>           -> enable/disable
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Files/Backups
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -80,11 +131,13 @@ set makeef=error.err " When using make, where should it dump the file
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Theme/Colors
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set background=dark
 syntax on " syntax highlighting on
-if has("gui_running")
-    set guifont=Ubuntu\ Mono\ 13
-    set printfont=Ubuntu\ Mono\ 13
+set background=light
+set background=dark
+
+"if has("gui_running")
+    "set guifont=Ubuntu\ Mono\ 13
+    "set printfont=Ubuntu\ Mono\ 13
     "set guifont=Droid\ Sans\ Mono\ 10
     "set printfont=Droid\ Sans\ Mono\ 10
     "set guifont=Droid\ Sans\ Mono\ 13
@@ -95,11 +148,11 @@ if has("gui_running")
     "set printfont=Inconsolata:h11:cANSI
     "set guifont=Consolas:h10
     "set printfont=Consolas:h9
-    set linespace=0   " vertical space between text lines.
-    colorscheme ir_black
+    "set linespace=0   " vertical space between text lines.
+    "colorscheme ir_black
 "else
 "   colorscheme ir_black 
-endif
+"endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim UI
@@ -158,9 +211,9 @@ set formatoptions+=mM " for charactors fold and patch
 set autoindent    " autoindent
 set smartindent   " smartindent
 set cindent       " do c-style indenting
-set tabstop=4     " tab spacing (settings below are just to unify it)
-set softtabstop=4 " unify
-set shiftwidth=4  " unify
+set tabstop=2     " tab spacing (settings below are just to unify it)
+set softtabstop=2 " unify
+set shiftwidth=2  " unify
 set expandtab     " no real tabs please!
 set nowrap        " wrap lines
 set smarttab      " use tabs at the start of a line, spaces elsewhere
@@ -177,20 +230,25 @@ set foldopen-=search " don't open folds when you search into them
 set foldopen-=undo   " don't open folds when you undo stuff
 
 " Cycle through all buffers.
-nnoremap <silent> <Tab> :bprevious<CR>:redraw<CR>
-nnoremap <silent> <S-Tab> :bnext<CR>:redraw<CR>
-nnoremap <silent> <C-Tab> :tabprevious<CR>:redraw<CR>
-nnoremap <silent> <C-S-Tab> :tabNext<CR>:redraw<CR>
-nnoremap <silent> <A-1> :buffer 1<CR>
-nnoremap <silent> <A-2> :buffer 2<CR>
-nnoremap <silent> <A-3> :buffer 3<CR>
-nnoremap <silent> <A-4> :buffer 4<CR>
-nnoremap <silent> <A-5> :buffer 5<CR>
-nnoremap <silent> <A-6> :buffer 6<CR>
-nnoremap <silent> <A-7> :buffer 7<CR>
-nnoremap <silent> <A-8> :buffer 8<CR>
-nnoremap <silent> <A-9> :buffer 9<CR>
-nnoremap <silent> <A-0> :buffer 10<CR>
+nnoremap <silent> <Tab> :bprevious<CR>:redraw<CR>:ls<CR>
+nnoremap <silent> q :bnext<CR>:redraw<CR>:ls<CR>
+"nnoremap <silent> <C-Tab> :tabprevious<CR>:redraw<CR>
+"nnoremap <silent> <C-S-Tab> :tabNext<CR>:redraw<CR>
+"nnoremap <silent> <A-1> :buffer 1<CR>
+"nnoremap <silent> <A-2> :buffer 2<CR>
+"nnoremap <silent> <A-3> :buffer 3<CR>
+"nnoremap <silent> <A-4> :buffer 4<CR>
+"nnoremap <silent> <A-5> :buffer 5<CR>
+"nnoremap <silent> <A-6> :buffer 6<CR>
+"nnoremap <silent> <A-7> :buffer 7<CR>
+"nnoremap <silent> <A-8> :buffer 8<CR>
+"nnoremap <silent> <A-9> :buffer 9<CR>
+"nnoremap <silent> <A-0> :buffer 10<CR>
+
+" Buffer switch commands
+" :b #number
+
+
 
 " make the arrow keys move within wrapped lines
 "map <Up> gk
@@ -201,43 +259,43 @@ nnoremap <silent> <A-0> :buffer 10<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Toggle Menu and Toolbar
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if has("gui_running")
-   set guioptions+=b
-   set guioptions-=m
-   set guioptions-=T
-   map <silent> <F11> :if &guioptions =~# 'T' <Bar>
-            \set guioptions-=T <Bar>
-            \set guioptions-=m <bar>
-        \else <Bar>
-            \set guioptions+=T <Bar>
-            \set guioptions+=m <Bar>
-        \endif<CR>
-
-   nnoremap <silent> <F9> :highlight Comment guifg=#2A2A2A guibg=NONE gui=NONE ctermfg=darkgray ctermbg=NONE cterm=NONE<CR>
-   nnoremap <silent> <S-F9> :highlight Comment guifg=#7C7C7C guibg=NONE gui=NONE ctermfg=darkgray ctermbg=NONE cterm=NONE<CR>
-
-   "--------------------
-   " Function: Open tag under cursor in new tab
-   " Source:   http://stackoverflow.com/questions/563616/vimctags-tips-and-tricks
-   "--------------------
-   map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
-
-   " Search for selected text, forwards or backwards.
-   vnoremap <silent> * :<C-U>
-     \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
-     \gvy/<C-R><C-R>=substitute(
-     \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
-     \gV:call setreg('"', old_reg, old_regtype)<CR>
-   vnoremap <silent> # :<C-U>
-     \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
-     \gvy?<C-R><C-R>=substitute(
-     \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
-     \gV:call setreg('"', old_reg, old_regtype)<CR>
-
-   nnoremap <silent> <F8> :NERDTreeToggle<CR>
-   nnoremap <silent> <F8> <ESC> :NERDTreeToggle<CR>
-
-endif
+"if has("gui_running")
+"   set guioptions+=b
+"   set guioptions-=m
+"   set guioptions-=T
+"   map <silent> <F11> :if &guioptions =~# 'T' <Bar>
+"            \set guioptions-=T <Bar>
+"            \set guioptions-=m <bar>
+"        \else <Bar>
+"            \set guioptions+=T <Bar>
+"            \set guioptions+=m <Bar>
+"        \endif<CR>
+"
+"   nnoremap <silent> <F9> :highlight Comment guifg=#2A2A2A guibg=NONE gui=NONE ctermfg=darkgray ctermbg=NONE cterm=NONE<CR>
+"   nnoremap <silent> <S-F9> :highlight Comment guifg=#7C7C7C guibg=NONE gui=NONE ctermfg=darkgray ctermbg=NONE cterm=NONE<CR>
+"
+"   "--------------------
+"   " Function: Open tag under cursor in new tab
+"   " Source:   http://stackoverflow.com/questions/563616/vimctags-tips-and-tricks
+"   "--------------------
+"   map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
+"
+"   " Search for selected text, forwards or backwards.
+"   vnoremap <silent> * :<C-U>
+"     \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+"     \gvy/<C-R><C-R>=substitute(
+"     \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+"     \gV:call setreg('"', old_reg, old_regtype)<CR>
+"   vnoremap <silent> # :<C-U>
+"     \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+"     \gvy?<C-R><C-R>=substitute(
+"     \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+"     \gV:call setreg('"', old_reg, old_regtype)<CR>
+"
+"   nnoremap <silent> <F8> :NERDTreeToggle<CR>
+"   nnoremap <silent> <F8> <ESC> :NERDTreeToggle<CR>
+"
+"endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Find file script and mappings
@@ -245,51 +303,21 @@ endif
 " Search using quickfix to list occurrences: Easily GREP current word in current file.
 " http://vim.wikia.com/wiki/Search_using_quickfix_to_list_occurrences
 command GREP :execute 'vimgrep '.expand('<cword>').' '.expand('%') | :copen | :cc
+command VGREP :vsplit | :execute 'vimgrep '.expand('<cword>').' '.expand('%') | :copen | :cc | :q
+" TODO: Improve grepf to catch all CPP class methods
+command GREPF :execute 'vimgrep ".*\S*::\S*.*(.*).*"  % '  | :copen | :cc
+command VGREPF :split | :execute 'vimgrep ".*\S*::\S*.*(.*).*"  % '  | :copen | :cc | :q
 command GREPDIR :execute 'vimgrep '.expand('<cword>').' *.*' | :copen | :cc
-nnoremap <silent> <F3> :GREP<CR>
-nnoremap <silent> <C-F3> :GREPDIR<CR>
-nnoremap <silent> <S-F3> :cclose<CR>
-
-function! Find(name)
-  let l:_name = substitute( a:name, "\\s", "*", "g" )
-
-  let l:files = system( "dir *".l:_name."* /B /S" )
-  let l:list = split( l:files, '\n' )
-  let l:len = len( l:list )
-
-  if l:len < 1
-    echo "'".a:name."' not found"
-    return
-  elseif l:len != 1
-    let l:i = 1
-    let l:cwd = substitute( getcwd(), '\\', '\\\\', "g" )
-
-    for line in l:list
-      echo l:i . ": " . substitute( l:line, l:cwd, "", "g" )
-      let l:i += 1
-    endfor
-
-    let l:input = input( "Which ? (<enter>=nothing)\n" )
-
-    if strlen( l:input ) == 0
-      return
-    elseif strlen( substitute( l:input, "[0-9]", "", "g" ) ) > 0
-      echo "Not a number"
-      return
-    elseif l:input < 1 || l:input > l:len
-      echo "Out of range"
-      return
-    endif
-
-    let l:line = l:list[l:input-1]
-  else
-    let l:line = l:list[0]
-  endif
-  let l:line = substitute( l:line, "^[^\t]*\t./", "", "" )
-  execute ":e " . l:line
-endfunction
-
-command! -nargs=1 Find :call Find("<args>")
+command VGREPDIR :vsplit | :execute 'vimgrep '.expand('<cword>').' *.*' | :copen | :cc | :q
+nnoremap <silent> /<F2> :GREP<CR>
+nnoremap <silent> <F2> :VGREP<CR>
+nnoremap <silent> /<F3> :GREPDIR<CR>
+nnoremap <silent> <F3> :VGREPDIR<CR>
+nnoremap <silent> <F4> :GREPF<CR>
+nnoremap <silent> /<F4> :VGREPF<CR>
+nnoremap <silent> <F5> :cclose<CR>
+command! -nargs=1 Vg :vsplit | :vimgrep <args> * | :copen | :cc | :q  
+command! -nargs=1 HVg :vimgrep <args> * | :copen | :cc  
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " File Explorer
@@ -324,9 +352,9 @@ set autochdir " auto change the current dierctory when you open the file or wind
 set makeef=makeerror.err
 set path=.,./../**
 
-nmap <S-F12> :!ctags -R .<CR>
-nmap <F12> :TlistToggle<CR>
-nmap <F12><ESC> :TlistToggle<CR>
+nmap <S-F10> :!ctags -R .<CR>
+nmap <F10> :TlistToggle<CR>
+nmap <F10><ESC> :TlistToggle<CR>
 
 
 
@@ -406,7 +434,4 @@ if has("code-snippet")
    StringAbbrGlobal acomb      "/// <summary>\n/// [~summary~]\n/// <\/summary>\nalways_comb begin : [~name~]\nend"
 endif
 
-set background=light
-set background=dark
 
-highlight Pmenu ctermbg=White

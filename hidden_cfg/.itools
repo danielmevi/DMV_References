@@ -1,5 +1,5 @@
 cmake /usr/intel/pkgs/cmake/3.4.0/bin/cmake
-P:gcc 5.2.0
+P:gcc 6.1.0
 P:bison 2.7.1
 gm4 /usr/intel/pkgs/autotools/2.69/bin/gm4
 P:gmake 3.82
@@ -7,3 +7,5 @@ P:gdb 7.5.1
 P:ddd 3.3.11-64/
 P:vim 7.4
 P:python 3.5.1
+P:clang 3.8.0
+P:git 2.4.1
