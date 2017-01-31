@@ -1,5 +1,4 @@
 # Commands
-# Commands
 alias ll ls -p
 alias l ls -lhrp
 alias cl clear
@@ -10,9 +9,25 @@ alias v vim
 
 # ZSE queue chedk
 alias zsejobs nbqstat -P fm_zse user=dmedin2
+# TBX unlock model build
+alias tbxUnlock velcomp -unlock_project
 
 # CC
 alias cc gcc
+alias g++6.1 /usr/intel/pkgs/gcc/6.1.0/bin/g++
+alias g++5.3 /usr/intel/pkgs/gcc/5.3.0/bin/g++
+alias g++4.9 /usr/intel/pkgs/gcc/4.9.3/bin/g++
+alias g++4.5 /usr/intel/pkgs/gcc/4.5.0a/bin/g++
+alias g++4.3.2 /usr/intel/pkgs/gcc/4.3.2/bin/g++
+alias g++4.7.2 /usr/intel/pkgs/gcc/4.7.2/bin/g++
+# clang
+alias clang /usr/intel/pkgs/clang/3.8.0/bin/clang
+alias format /usr/intel/pkgs/clang/3.8.0/bin/clang-format
+# python
+alias python3 /usr/intel/pkgs/python/3.5.1/bin/python
+
+# BOOST
+setenv BOOST /usr/intel/pkgs/boost/1.62.0/include
 
 #Places General
 alias cdDNV cd /nfs/site/disks/dnv.emu.002/dmedin2
@@ -36,6 +51,7 @@ alias cdPPC cd /nfs/site/disks/fm_vt_0073/work/dmedin2
 setenv PPC /nfs/site/disks/fm_vt_0073/work/dmedin2/
 # PPC vtools collaterals
 alias cdvt cd /nfs/site/proj/vt/tools/sim/collateral
+setenv VT /nfs/site/proj/vt/tools/sim/collateral
 
 #TMUX tmp
 alias be "$HOME/local/bin/tmux show-buffer | xclip -i"
@@ -48,4 +64,19 @@ alias eclipse "/nfs/site/eda/group/SYSNAME/simics/windriver/simics/4.8.87/bin/si
 
 # IDI
 alias IDIclone "git clone ssh://dmedin2@git-amr-2.devtools.intel.com:29418/pve_spark_modules-idi_xtor"
-
+# IDI places
+alias cdsrc "source $PPC/home/dmv_home/scripts/idi_paths.sh src"
+alias cdidi "source $PPC/home/dmv_home/scripts/idi_paths.sh idi"
+alias cdhw "source $PPC/home/dmv_home/scripts/idi_paths.sh hw"
+alias cdinclude "source $PPC/home/dmv_home/scripts/idi_paths.sh include"
+alias cdcore "source $PPC/home/dmv_home/scripts/idi_paths.sh core"
+alias cduncore "source $PPC/home/dmv_home/scripts/idi_paths.sh uncore"
+alias cdbase "source $PPC/home/dmv_home/scripts/idi_paths.sh base"
+alias cdmodel "source $PPC/home/dmv_home/scripts/idi_paths.sh testmodel"
+alias cdunittests "source $PPC/home/dmv_home/scripts/idi_paths.sh unittests"
+alias cdtargets "source $PPC/home/dmv_home/scripts/idi_paths.sh targets"
+alias cdregression "source $PPC/home/dmv_home/scripts/idi_paths.sh regression"
+alias cdcfg "source $PPC/home/dmv_home/scripts/idi_paths.sh cfg"
+alias cdtests "source $PPC/home/dmv_home/scripts/idi_paths.sh tests"
+alias cdsimics "source $PPC/home/dmv_home/scripts/idi_paths.sh simics"
+alias cdroot "source $PPC/home/dmv_home/scripts/idi_paths.sh root"

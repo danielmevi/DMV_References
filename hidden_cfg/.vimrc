@@ -35,6 +35,7 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 
 let g:ycm_server_python_interpreter = "/usr/intel/bin/python2.7" 
+let g:ycm_python_binary_path = 'python'
 let g:ycm_confirm_extra_conf = 0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -51,6 +52,26 @@ set completeopt=longest,menu " for omnipotent
 behave mswin           " control mouse behavior
 
 set diffexpr=
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" ycmCompleter Goto
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+nnoremap <leader>go  : YcmCompleter GoTo<CR>
+nnoremap <leader>def : YcmCompleter GoToDefinition<CR>
+nnoremap <leader>dec : YcmCompleter GoToDeclaration<CR>
+nnoremap <leader>inc : YcmCompleter GoToInclude<CR>
+nnoremap <leader>fix : YcmCompleter FixIt<CR>
+nnoremap <leader>p   : YcmCompleter GetParent<CR>
+nnoremap <leader>t   : YcmCompleter GetType<CR>
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Fold
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+setlocal foldmethod=manual
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Moves
@@ -118,7 +139,8 @@ imap <C-E> <ESC>:pyf ~/clang-format.py<cr>
 " Find next      -> ]s
 " Find previous  -> [s
 " Suggestions    -> z= 
-" <F6>           -> enable/disable
+" <F7>           -> enable/disable
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Files/Backups
@@ -211,9 +233,9 @@ set formatoptions+=mM " for charactors fold and patch
 set autoindent    " autoindent
 set smartindent   " smartindent
 set cindent       " do c-style indenting
-set tabstop=2     " tab spacing (settings below are just to unify it)
-set softtabstop=2 " unify
-set shiftwidth=2  " unify
+set tabstop=4     " tab spacing (settings below are just to unify it)
+set softtabstop=4 " unify
+set shiftwidth=4  " unify
 set expandtab     " no real tabs please!
 set nowrap        " wrap lines
 set smarttab      " use tabs at the start of a line, spaces elsewhere
@@ -230,8 +252,8 @@ set foldopen-=search " don't open folds when you search into them
 set foldopen-=undo   " don't open folds when you undo stuff
 
 " Cycle through all buffers.
-nnoremap <silent> <Tab> :bprevious<CR>:redraw<CR>:ls<CR>
-nnoremap <silent> q :bnext<CR>:redraw<CR>:ls<CR>
+nnoremap <silent> 1 :bprevious<CR>:redraw<CR>:ls<CR>
+nnoremap <silent> 2 :bnext<CR>:redraw<CR>:ls<CR>
 "nnoremap <silent> <C-Tab> :tabprevious<CR>:redraw<CR>
 "nnoremap <silent> <C-S-Tab> :tabNext<CR>:redraw<CR>
 "nnoremap <silent> <A-1> :buffer 1<CR>
@@ -300,13 +322,36 @@ nnoremap <silent> q :bnext<CR>:redraw<CR>:ls<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Find file script and mappings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+function! GrepQuick(pat)
+  let all = getqflist()
+  for d in all
+    if bufname(d['bufnr']) !~ a:pat && d['text'] !~ a:pat
+        call remove(all, index(all,d))
+    endif
+  endfor
+  call setqflist(all)
+endfunction
+command! -nargs=* SearchQL call GrepQuick(<q-args>)
+
+function! GrepQuickFix(pat)
+  let all = getqflist()
+  for d in all
+    if bufname(d['bufnr']) !~ a:pat && !(d['text'] !~ a:pat)
+        call remove(all, index(all,d))
+    endif
+  endfor
+  call setqflist(all)
+endfunction
+command! -nargs=* GrepQF call GrepQuickFix(<q-args>)
+
 " Search using quickfix to list occurrences: Easily GREP current word in current file.
 " http://vim.wikia.com/wiki/Search_using_quickfix_to_list_occurrences
 command GREP :execute 'vimgrep '.expand('<cword>').' '.expand('%') | :copen | :cc
 command VGREP :vsplit | :execute 'vimgrep '.expand('<cword>').' '.expand('%') | :copen | :cc | :q
 " TODO: Improve grepf to catch all CPP class methods
-command GREPF :execute 'vimgrep ".*\S*::\S*.*(.*).*"  % '  | :copen | :cc
-command VGREPF :split | :execute 'vimgrep ".*\S*::\S*.*(.*).*"  % '  | :copen | :cc | :q
+command GREPF :execute 'vimgrep ".*\S*::\S*.*"  % '  | :copen | :call GrepQuickFix(";") | :call GrepQuickFix("}") | :call GrepQuickFix("=") | :call GrepQuickFix(".") | :call GrepQuickFix(" \\* ") | :cc
+command VGREPF :split | :execute 'vimgrep ".*\S*::\S*.*"  % '  | :copen | :call GrepQuickFix(";") | :call GrepQuickFix("}") | :call GrepQuickFix("=") | :call GrepQuickFix(".") | :call GrepQuickFix(" \\* ") | :cc | :q
 command GREPDIR :execute 'vimgrep '.expand('<cword>').' *.*' | :copen | :cc
 command VGREPDIR :vsplit | :execute 'vimgrep '.expand('<cword>').' *.*' | :copen | :cc | :q
 nnoremap <silent> /<F2> :GREP<CR>
@@ -316,8 +361,15 @@ nnoremap <silent> <F3> :VGREPDIR<CR>
 nnoremap <silent> <F4> :GREPF<CR>
 nnoremap <silent> /<F4> :VGREPF<CR>
 nnoremap <silent> <F5> :cclose<CR>
-command! -nargs=1 Vg :vsplit | :vimgrep <args> * | :copen | :cc | :q  
-command! -nargs=1 HVg :vimgrep <args> * | :copen | :cc  
+command! -nargs=1 Grep :vsplit | :vimgrep <args> * | :copen | :cc | :q  
+command! -nargs=1 HGreep :vimgrep <args> * | :copen | :cc  
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" gmake vim command
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" TODO: Add path parser and gmake command from vim for make idi_xtor, make vcs, make zse, make tbx and for 
+" personal projects make
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " File Explorer

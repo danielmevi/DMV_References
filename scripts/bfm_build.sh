@@ -8,6 +8,6 @@ bin/build-libs -bfm=idi2 -clean -thread=12 -64bit --disable_srtp --debugmsgs=no 
 #DEBUG
 #bin/build-libs -bfm=idi2 -clean -thread=12 -64bit --disable_srtp -debug
 
-#bin/runtest -clean -cleanr  -bfm=idi2 -test=IDIBasic/IDIEmulateIaMode_skx -64bit
-#bin/verify -bfm=idi2 -test=IDIBasic/IDIEmulateIaMode_skx
+bin/runtest -clean -cleanr  -bfm=idi2 -test=IDIBasic/IDIEmulateIaMode_skx -64bit
+bin/verify -bfm=idi2 -test=IDIBasic/IDIEmulateIaMode_skx
 

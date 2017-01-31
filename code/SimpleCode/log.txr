@@ -1,0 +1,5 @@
+Tick,Cycle,PacketType,OpGroup,Opcode,Address,CQid,UQid,Data,ByteEnable,Length,LPid,CLoS,SAI,NonTemporal,CacheNear,CacheFar,Hash,Topology,Spare,MonitorExist,HLEAbort,ChunkValid,Bogus,Poison,DataParity,BEParity,AddrParity,SelfSnp,ECC,PRE
+11281287,2350268,C2U_Request,0,04,00003ECF7E000,000,,,,00,0,00,18,3,1,0,00,0,000,,,,,,,,1,0,,,
+11281413,2350294,U2C_Response,,4,,000,,0001,,,,,,,,,,,0,,,,,,,,,,,,,,0
+11281413,2350294,U2C_Data,,,,000,,00000003 EE884004 00000002 00000025 00000000 00000000 00000000 00000011,,,,,,,,,,,0,,,3,,0,00,,00000,00
+
