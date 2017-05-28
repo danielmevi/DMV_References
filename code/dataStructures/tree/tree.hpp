@@ -17,6 +17,7 @@
 #include <memory>
 #include <vector>
 #include <cstdint>
+#include <stdexcept>
 
 class tree {
 private:
@@ -26,9 +27,6 @@ private:
     uint32_t _value;
     Node(Node* parent, const uint32_t value) : _parent(parent), _value(value) {
         _children.reserve(2);
-    }
-    Node() _parent(nullptr), _value(0) {
-      _children.reserve(2);
     }
   };
   std::unique_ptr<Node> _root;
@@ -46,10 +44,9 @@ public:
   ~tree();
 
   // API
-  void insert(const uint32_t);
+  bool insert(const uint32_t);
   bool remove(const uint32_t);
   bool find(const uint32_t) const;
-  void balance();
 };
 
 #endif
