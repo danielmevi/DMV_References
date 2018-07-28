@@ -1,6 +1,0 @@
-#!/bin/bash
-
-DIR=$@
-chgrp -R vtools $DIR
-chmod -R o=g $DIR
-chmod -R g=u $DIR

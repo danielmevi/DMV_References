@@ -187,6 +187,7 @@ if ($?prompt) then
     #
     # stty erase '^H' # normal
     stty erase '^?' # Sun keyboard
+    stty -ixon  # Enable shift,Control and other control buttoms for vim
     # !!! NOTE: before changing stty erase, also make sure you have the
     # !!!       eclogin version of .Xdefaults which works together with
     # !!!       the stty setting.

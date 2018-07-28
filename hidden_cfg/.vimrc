@@ -18,6 +18,7 @@ call vundle#begin()
 "Plugin 'VundleVim/Vundle.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/syntastic'
+Plugin 'funorpain/vim-cpplint'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -66,6 +67,12 @@ nnoremap <leader>p   : YcmCompleter GetParent<CR>
 nnoremap <leader>t   : YcmCompleter GetType<CR>
 
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" cpplint
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+autocmd FileType cpp map <buffer> <F6> :call Cpplint()<CR>
+" autocmd BufWritePost *.h,*.cpp call Cpplint()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Fold
@@ -182,7 +189,7 @@ set background=dark
 set wildmenu       " turn on wild menu
 set ruler          " Always show current positions along the bottom
 set cmdheight=2    " the command bar is 1 high
-"set list           " show whitespace at the end of lines.
+set list           " show whitespace at the end of lines.
 set number         " turn on line numbers
 set numberwidth=4  " minimum width to use for the number column,not a fix size
 set hid            " you can change buffer without saving
@@ -194,7 +201,7 @@ set report=0       " tell us when anything is changed via :...
 set lz             " do not redraw while running macros (much faster) (LazyRedraw)
                    " make the splitters between windows be blank
 set fillchars=vert:\ ,stl:\ ,stlnc:\
-set textwidth=119
+set textwidth=80
 set mousehide
 set hidden
 set showcmd
@@ -233,10 +240,11 @@ set formatoptions+=mM " for charactors fold and patch
 set autoindent    " autoindent
 set smartindent   " smartindent
 set cindent       " do c-style indenting
+set expandtab     " no real tabs please!
 set tabstop=4     " tab spacing (settings below are just to unify it)
+retab             " Change existing tabs
 set softtabstop=4 " unify
 set shiftwidth=4  " unify
-set expandtab     " no real tabs please!
 set nowrap        " wrap lines
 set smarttab      " use tabs at the start of a line, spaces elsewhere
 "set dictionary=/usr/share/dict/american-english "use dictionary when input the english word
@@ -374,14 +382,14 @@ command! -nargs=1 HGreep :vimgrep <args> * | :copen | :cc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " File Explorer
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:explVertical=1 " should I split verticially
-let g:explWinSize=35 " width of 35 pixels
+"let g:explVertical=1 " should I split verticially
+"let g:explWinSize=35 " width of 35 pixels
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Win Manager
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:winManagerWidth=35 " How wide should it be( pixels)
-let g:winManagerWindowLayout = 'FileExplorer,TagsExplorer|BufExplorer' " What windows should it
+"let g:winManagerWidth=35 " How wide should it be( pixels)
+"let g:winManagerWindowLayout = 'FileExplorer,TagsExplorer|BufExplorer' " What windows should it
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CTags and Taglist
@@ -389,101 +397,116 @@ let g:winManagerWindowLayout = 'FileExplorer,TagsExplorer|BufExplorer' " What wi
 " For Windows
 "let Tlist_Ctags_Cmd = "C:\\Progra~1\\Vim\\Vim72\\ctags.exe" " Location of my ctags
 " For Linux
-let Tlist_Ctags_Cmd = "ctags"       " Location of my ctags
+"let Tlist_Ctags_Cmd = "ctags"       " Location of my ctags
 
-let Tlist_Sort_Type = "name"        " order by
-let Tlist_Use_Right_Window = 0      " split to the left side of the screen
-let Tlist_Compact_Format =  0       " show small menu
-let Tlist_Exit_OnlyWindow = 1       " if you are the last, kill yourself
-let Tlist_File_Fold_Auto_Close = 0  " Do not close tags for other files
-let Tlist_Enable_Fold_Column = 0    " Show folding tree
-let Tlist_Show_One_File = 1         " only display the tag of current file
+"let Tlist_Sort_Type = "name"        " order by
+"let Tlist_Use_Right_Window = 0      " split to the left side of the screen
+"let Tlist_Compact_Format =  0       " show small menu
+"let Tlist_Exit_OnlyWindow = 1       " if you are the last, kill yourself
+"let Tlist_File_Fold_Auto_Close = 0  " Do not close tags for other files
+"let Tlist_Enable_Fold_Column = 0    " Show folding tree
+"let Tlist_Show_One_File = 1         " only display the tag of current file
 
-set tags=./tags,../tags,./../../tags,./**/tags  " which tags files CTRL-] will search
-set autochdir " auto change the current dierctory when you open the file or window or any other buffer
-set makeef=makeerror.err
-set path=.,./../**
+"set tags=./tags,../tags,./../../tags,./**/tags  " which tags files CTRL-] will search
+"set autochdir " auto change the current dierctory when you open the file or window or any other buffer
+"set makeef=makeerror.err
+"set path=.,./../**
 
-nmap <S-F10> :!ctags -R .<CR>
-nmap <F10> :TlistToggle<CR>
-nmap <F10><ESC> :TlistToggle<CR>
+"nmap <S-F10> :!ctags -R .<CR>
+"nmap <F10> :TlistToggle<CR>
+"nmap <F10><ESC> :TlistToggle<CR>
 
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Cscope
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if has("cscope")
-        set csprg=cscope
-        set csto=0
-        set nocst
-        set nocsverb
-        " add any database in current directory
-        if filereadable("cscope.out")
-            cs add cscope.out
-        elseif $CSCOPE_DB != ""
-            cs add $CSCOPE_DB
-        endif
-
-        " show msg when any other cscope db added
-        set cscopeverbose
-        set csverb
-        set cscopetag
-        set cscopequickfix=s-,g-,c-,d-,t-,e-,f-,i-
-
-        " Using 'CTRL-spacebar' then a search type makes the vim window
-        " split horizontally, with search result displayed in
-        " the new window.
-
-        nmap <C-Space>s :scs find s <C-R>=expand("<cword>")<CR><CR>
-        nmap <C-Space>g :scs find g <C-R>=expand("<cword>")<CR><CR>
-        nmap <C-Space>c :scs find c <C-R>=expand("<cword>")<CR><CR>
-        nmap <C-Space>t :scs find t <C-R>=expand("<cword>")<CR><CR>
-        nmap <C-Space>e :scs find e <C-R>=expand("<cword>")<CR><CR>
-        nmap <C-Space>f :scs find f <C-R>=expand("<cfile>")<CR><CR>
-        nmap <C-Space>i :scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-        nmap <C-Space>d :scs find d <C-R>=expand("<cword>")<CR><CR>
-
-        " Hitting CTRL-space *twice* before the search type does a vertical
-        " split instead of a horizontal one
-
-        nmap <C-Space><C-Space>s
-                \:vert scs find s <C-R>=expand("<cword>")<CR><CR>
-        nmap <C-Space><C-Space>g
-                \:vert scs find g <C-R>=expand("<cword>")<CR><CR>
-        nmap <C-Space><C-Space>c
-                \:vert scs find c <C-R>=expand("<cword>")<CR><CR>
-        nmap <C-Space><C-Space>t
-                \:vert scs find t <C-R>=expand("<cword>")<CR><CR>
-        nmap <C-Space><C-Space>e
-                \:vert scs find e <C-R>=expand("<cword>")<CR><CR>
-        nmap <C-Space><C-Space>i
-                \:vert scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-        nmap <C-Space><C-Space>d
-                \:vert scs find d <C-R>=expand("<cword>")<CR><CR>
-endif
-
-autocmd FileType python set omnifunc=pythoncomplete#Complete
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-autocmd FileType c set omnifunc=ccomplete#Complete
-
+"if has("cscope")
+"        set csprg=cscope
+"        set csto=0
+"        set nocst
+"        set nocsverb
+"        " add any database in current directory
+"        if filereadable("cscope.out")
+"            cs add cscope.out
+"        elseif $CSCOPE_DB != ""
+"            cs add $CSCOPE_DB
+"        endif
+"
+"        " show msg when any other cscope db added
+"        set cscopeverbose
+"        set csverb
+"        set cscopetag
+"        set cscopequickfix=s-,g-,c-,d-,t-,e-,f-,i-
+"
+"        " Using 'CTRL-spacebar' then a search type makes the vim window
+"        " split horizontally, with search result displayed in
+"        " the new window.
+"
+"        nmap <C-Space>s :scs find s <C-R>=expand("<cword>")<CR><CR>
+"        nmap <C-Space>g :scs find g <C-R>=expand("<cword>")<CR><CR>
+"        nmap <C-Space>c :scs find c <C-R>=expand("<cword>")<CR><CR>
+"        nmap <C-Space>t :scs find t <C-R>=expand("<cword>")<CR><CR>
+"        nmap <C-Space>e :scs find e <C-R>=expand("<cword>")<CR><CR>
+"        nmap <C-Space>f :scs find f <C-R>=expand("<cfile>")<CR><CR>
+"        nmap <C-Space>i :scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+"        nmap <C-Space>d :scs find d <C-R>=expand("<cword>")<CR><CR>
+"
+"        " Hitting CTRL-space *twice* before the search type does a vertical
+"        " split instead of a horizontal one
+"
+"        nmap <C-Space><C-Space>s
+"                \:vert scs find s <C-R>=expand("<cword>")<CR><CR>
+"        nmap <C-Space><C-Space>g
+"                \:vert scs find g <C-R>=expand("<cword>")<CR><CR>
+"        nmap <C-Space><C-Space>c
+"                \:vert scs find c <C-R>=expand("<cword>")<CR><CR>
+"        nmap <C-Space><C-Space>t
+"                \:vert scs find t <C-R>=expand("<cword>")<CR><CR>
+"        nmap <C-Space><C-Space>e
+"                \:vert scs find e <C-R>=expand("<cword>")<CR><CR>
+"        nmap <C-Space><C-Space>i
+"                \:vert scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+"        nmap <C-Space><C-Space>d
+"                \:vert scs find d <C-R>=expand("<cword>")<CR><CR>
+"endif
+"
+"autocmd FileType python set omnifunc=pythoncomplete#Complete
+"autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+"autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+"autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+"autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+"autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+"autocmd FileType c set omnifunc=ccomplete#Complete
+"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Code snippets
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if has("code-snippet")
-   StringAbbrGlobal summary    "/// <summary>\n/// [~summary~]\n/// <\/summary>"
-   StringAbbrGlobal param      "/// <param name='[~name~]'>[~desc~]</parameter>\n"
-   StringAbbrGlobal port       "/// <port name='[~name~]'>[~desc~]</port>\n"
-   StringAbbrGlobal remarks    "/// <remarks>\n// [~remarks~]\n// </remarks>"
+"if has("code-snippet")
+"   StringAbbrGlobal summary    "/// <summary>\n/// [~summary~]\n/// <\/summary>"
+"   StringAbbrGlobal param      "/// <param name='[~name~]'>[~desc~]</parameter>\n"
+"   StringAbbrGlobal port       "/// <port name='[~name~]'>[~desc~]</port>\n"
+"   StringAbbrGlobal remarks    "/// <remarks>\n// [~remarks~]\n// </remarks>"
 "   StringAbbrGlobal //---     "//--------------------------------------------------------------------------\n"
-   StringAbbrGlobal bend       "begin\n[~body~]\nend"
+"   StringAbbrGlobal bend       "begin\n[~body~]\nend"
 "   StringAbbrGlobal function  "function automatic [~returntype~] [~name~] ( [~paramtype~] [~paramname~] )\n   returns [~returnvalue~];\nendfunction"
 "   StringAbbrGlobal task      "task automatic [~name~] ( [~paramtype~] [~paramname~] )\n   [~body~]\nendtask"
-   StringAbbrGlobal acomb      "/// <summary>\n/// [~summary~]\n/// <\/summary>\nalways_comb begin : [~name~]\nend"
-endif
+"   StringAbbrGlobal acomb      "/// <summary>\n/// [~summary~]\n/// <\/summary>\nalways_comb begin : [~name~]\nend"
+"endif
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Trailing Whitespace
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+function! <SID>StripTrailingWhitespace()
+    " Preparation: save last search, and cursor position.
+    let _s=@/
+    let l = line(".")
+    let c = col(".")
+    " Do the business:
+    %s/\s\+$//e
+    " Clean up: restore previous search history, and cursor position
+    let @/=_s
+    call cursor(l, c)
+endfunction
+nmap <silent> <Leader><space> :call <SID>StripTrailingWhitespace()<CR>
