@@ -1,5 +1,5 @@
 dmvSET
 ======
 
-Personal play sources, excercises, experiments, examples for personal tracking purpose.
+Personal tracking of play sources, excercises, experiments, examples and more
 
